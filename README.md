@@ -19,9 +19,11 @@
  　└ List を使い、登録された単語をセクションごとに表示。意味・例文も同時に確認可能
   
 単語の削除機能
+
  　└ onDelete(perform:) を使い、スワイプで削除操作に対応
   
 MVVMアーキテクチャによる構造設計
+
  　└ データモデル（WordItem）、ビジネスロジック（WordViewModel）、UI（ContentView, AddWordView）を明確に分離し、保守性を意識した設計を実践
 
 導入していきたい機能
