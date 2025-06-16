@@ -3,33 +3,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject  var viewModel = WordViewModel()
-    @State  var showingAddView = false
+    @Environment(\.managedObjectContext) private var context
+    @StateObject private var viewModel: WordViewModel
+
+    @State private var showingAddView = false
+
+    init() {
+        let context = PersistenceController.shared.container.viewContext
+        _viewModel = StateObject(wrappedValue: WordViewModel(context: context))
+    }
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.words) { word in
-                    VStack(alignment: .leading,spacing: 10) {
+                ForEach(viewModel.words, id: \.self) { word in
+                    VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                        Text("単語:")
-                            .foregroundColor(.gray)
-
-                        Text(word.word)
-                            .font(.headline)
+                            Text("単語:").foregroundColor(.gray)
+                            Text(word.word ?? "").font(.headline)
                         }
                         HStack {
-                            Text("意味:")
-                                .foregroundColor(.gray)
-                            Text(word.meaning)
-                                .font(.headline)
+                            Text("意味:").foregroundColor(.gray)
+                            Text(word.meaning ?? "").font(.headline)
                         }
                         HStack {
-                            Text("例文:")
-                                .foregroundColor(.gray)
-                            Text(word.example)
-                            .font(.headline)                        }
-                     
+                            Text("例文:").foregroundColor(.gray)
+                            Text(word.example ?? "").font(.headline)
+                        }
                     }
                 }
                 .onDelete(perform: viewModel.deleteWord)
@@ -37,11 +37,8 @@ struct ContentView: View {
             .navigationTitle("単語メモ")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingAddView = true
-                    }) {
+                    Button(action: { showingAddView = true }) {
                         Image(systemName: "plus")
-                        Spacer()
                     }
                 }
             }

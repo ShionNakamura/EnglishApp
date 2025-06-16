@@ -10,19 +10,16 @@ struct AddWordView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: WordViewModel
 
-    @State var word = ""
-    @State var meaning = ""
-    @State var example = ""
-    
-
+    @State private var word = ""
+    @State private var meaning = ""
+    @State private var example = ""
 
     var body: some View {
         NavigationView {
             Form {
                 TextField("単語: Apple", text: $word)
                 TextField("意味: リンゴ", text: $meaning)
-                TextField("例: I Ate an apple today", text: $example)
-
+                TextField("例: I ate an apple today", text: $example)
             }
             .navigationTitle("新しい単語")
             .toolbar {
@@ -46,6 +43,9 @@ struct AddWordView: View {
 }
 
 
+
 #Preview {
-    AddWordView(viewModel: WordViewModel())
+//    AddWordView(viewModel: WordViewModel())
+    let context = PersistenceController.shared.container.viewContext
+       return AddWordView(viewModel: WordViewModel(context: context))
 }
