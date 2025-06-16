@@ -25,6 +25,8 @@
 MVVMアーキテクチャによる構造設計
 
  　└ データモデル（WordItem）、ビジネスロジック（WordViewModel）、UI（ContentView, AddWordView）を明確に分離し、保守性を意識した設計を実践
+データ管理
+   └ Core Dataを使用
 
 導入していきたい機能
 ---
