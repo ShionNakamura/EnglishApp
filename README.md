@@ -64,7 +64,3 @@ MVVMアーキテクチャによる構造設計
 👉 技術：UNUserNotificationCenter を使ってローカル通知
 
 
-
-📆完成予定
---
-終了予定期間 7月末頃迄
