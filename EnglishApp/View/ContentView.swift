@@ -7,6 +7,8 @@ struct ContentView: View {
     @StateObject private var viewModel: WordViewModel
 
     @State private var showingAddView = false
+    @State private var showingReview = false
+
 
     init() {
         let context = PersistenceController.shared.container.viewContext
@@ -41,10 +43,19 @@ struct ContentView: View {
                         Image(systemName: "plus")
                     }
                 }
+                ToolbarItem(placement: .navigationBarLeading) {
+                           Button(action: { showingReview = true }) {
+                               Text("復習モード")
+                           }
+                       }
             }
+            
             .sheet(isPresented: $showingAddView) {
                 AddWordView(viewModel: viewModel)
             }
+            .sheet(isPresented: $showingReview) {
+                ReviewTypingQuizView(viewModel: viewModel)
+               }
         }
     }
 }
