@@ -62,5 +62,6 @@ UNUserNotificationCenter を活用して、ローカル通知を実装
 | アーキテクチャ   | MVVM（Model-View-ViewModel）                |
 | データ管理     | Core Data |
 | 通知機能      | UserNotifications（ローカル通知）                 |
+| ログイン機能      | Firebase                 |
 
 
