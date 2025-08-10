@@ -1,26 +1,25 @@
-
-
 import SwiftUI
-import FirebaseAuth
 
-struct LoginView: View {
+struct SignUpView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    
+
     @State private var email = ""
     @State private var password = ""
+    @State private var confirmPassword = ""
     @State private var errorMessage = ""
-    @State private var isLoggedIn = false
-    @State private var isSignUp = false
-    
+    @State private var isRegistered = false
+
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                Text("ログインする")
-                    .font(.largeTitle)
+                Spacer()
+                Text("新規登録をする")
+                    .font(.title)
                     .bold()
                     .frame(height: 100)
-        
-        
+                
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.emailAddress)
@@ -31,25 +30,25 @@ struct LoginView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
-                Button("ログイン") {
-                    authViewModel.login(email: email, password: password) { result in
+                SecureField("Confirm Password", text: $confirmPassword)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
+                
+                
+                Button("登録する") {
+                    errorMessage = ""
+                    guard password == confirmPassword else {
+                        errorMessage = "パスワードが一致しません"
+                        return
+                    }
+                    authViewModel.signUp(email: email, password: password) { result in
                         switch result {
                         case .success:
-                            isLoggedIn = true
+                            isRegistered = true
                         case .failure(let error):
                             errorMessage = error.localizedDescription
                         }
                     }
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-                .padding(.horizontal)
-                
-                Button("登録する") {
-                    isSignUp = true
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -64,18 +63,22 @@ struct LoginView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 }
+                
+                Spacer()
             }
             .padding()
-            .navigationDestination(isPresented: $isLoggedIn) {
-                        StarterView()
-            
-                    }
-            
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $isRegistered) {
+                            StarterView()
+//                    .environmentObject(authViewModel)
+                        }
         }
     }
 }
 
+
+
 #Preview {
-    LoginView()
-//        .environmentObject(AuthViewModel())
+    SignUpView()
 }
+
