@@ -15,7 +15,7 @@
 AuthViewModel.login() を使用。
 
 新規登録機能
-Firebase Authを使って新規ユーザーを作成。成功時は自動ログイン。
+Firebase Authを使って新規ユーザーを作成、成功時は自動ログイン。
 AuthViewModel.signUp() を使用。
 
 ログアウト機能
