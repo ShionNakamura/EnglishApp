@@ -8,7 +8,6 @@
 
 📲 実装済みの主な機能一覧
  --
-
 1. ユーザー認証機能（Firebase Authentication）
 ログイン機能
 メールアドレスとパスワードでFirebase Authにサインイン
