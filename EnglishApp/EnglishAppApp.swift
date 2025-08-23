@@ -14,16 +14,22 @@ struct EnglishAppApp: App {
     let persistenceController = PersistenceController.shared
 
 //      @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate　　// これがcrushする原因
+    @StateObject var authViewModel = AuthViewModel()   
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(AuthViewModel())
-                .onAppear {
-                                   NotificationManager.shared.requestAuthorization()
-                                   NotificationManager.shared.scheduleDailyNotification()
-                               }
+            if authViewModel.user != nil {
+                ContentView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(authViewModel)
+                    .onAppear {
+                        NotificationManager.shared.requestAuthorization()
+                        NotificationManager.shared.scheduleDailyNotification()
+                    }
+            } else {
+                LoginView()
+                    .environmentObject(authViewModel)
+            }
         }
     }
 }

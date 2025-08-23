@@ -3,17 +3,20 @@ import SwiftUI
 struct StarterView: View {
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack{
             
                 NavigationLink(destination: ContentView()) {
-                    Text("アプリを始める")
+                    VStack(spacing: 30) {
+    
+                    Text("学習を始める")
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(8)
+                    }
                 }
             }
-            .navigationTitle("スタート画面")
+         
         }
     }
 }
