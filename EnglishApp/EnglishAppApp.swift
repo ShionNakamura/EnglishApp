@@ -13,7 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct EnglishAppApp: App {
     let persistenceController = PersistenceController.shared
 
-//      @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate　　// これがcrushする原因
+      @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var authViewModel = AuthViewModel()   
 
     var body: some Scene {

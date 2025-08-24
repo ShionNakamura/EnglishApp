@@ -15,22 +15,22 @@ struct SignUpView: View {
         NavigationStack {
             VStack(spacing: 20) {
                 Spacer()
-                Text("新規登録をする")
+                Text("新規登録")
                     .font(.title)
                     .bold()
                     .frame(height: 100)
                 
-                TextField("Email", text: $email)
+                TextField("メールアドレス", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .padding(.horizontal)
                 
-                SecureField("Password", text: $password)
+                SecureField("パスワード", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
-                SecureField("Confirm Password", text: $confirmPassword)
+                SecureField("パスワード確認", text: $confirmPassword)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 

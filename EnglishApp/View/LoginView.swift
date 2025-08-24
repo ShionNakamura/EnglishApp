@@ -21,13 +21,13 @@ struct LoginView: View {
                     .frame(height: 100)
         
         
-                TextField("Email", text: $email)
+                TextField("メールアドレス", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .padding(.horizontal)
                 
-                SecureField("Password", text: $password)
+                SecureField("パスワード", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
@@ -48,7 +48,7 @@ struct LoginView: View {
                 .cornerRadius(8)
                 .padding(.horizontal)
                 
-                Button("登録する") {
+                Button("アカウント登録する") {
                     isSignUp = true
                 }
                 .padding()
@@ -68,6 +68,10 @@ struct LoginView: View {
             .padding()
             .navigationDestination(isPresented: $isLoggedIn) {
                         StarterView()
+            
+                    }
+            .navigationDestination(isPresented: $isSignUp) {
+                        SignUpView()
             
                     }
             
