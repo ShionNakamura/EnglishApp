@@ -1,22 +1,34 @@
 import SwiftUI
 
 struct StarterView: View {
+    @AppStorage("currentScreen") private var currentScreen = "starter"
+
     var body: some View {
         NavigationStack {
-            VStack{
-            
+            VStack(spacing: 40) {
+                // 学習モード
                 NavigationLink(destination: ContentView()) {
-                    VStack(spacing: 30) {
-    
-                    Text("学習を始める")
+                    Text("単語帳")
                         .foregroundColor(.white)
-                        .padding()
+                        .frame(width: 200, height: 50)
                         .background(Color.blue)
-                        .cornerRadius(8)
-                    }
+                        .cornerRadius(10)
+                }
+
+                // 復習モード
+                NavigationLink(destination: {
+                    let context = PersistenceController.shared.container.viewContext
+                    let viewModel = WordViewModel(context: context)
+                    ReviewTypingQuizView(viewModel: viewModel)
+                }) {
+                    Text("復習モード")
+                        .foregroundColor(.white)
+                        .frame(width: 200, height: 50)
+                        .background(Color.green)
+                        .cornerRadius(10)
                 }
             }
-         
+            .navigationTitle("ホーム")
         }
     }
 }

@@ -43,19 +43,13 @@ struct ContentView: View {
                         Image(systemName: "plus")
                     }
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                           Button(action: { showingReview = true }) {
-                               Text("復習モード")
-                           }
-                       }
+                
             }
             
             .sheet(isPresented: $showingAddView) {
                 AddWordView(viewModel: viewModel)
             }
-            .sheet(isPresented: $showingReview) {
-                ReviewTypingQuizView(viewModel: viewModel)
-               }
+          
         }
     }
 }
