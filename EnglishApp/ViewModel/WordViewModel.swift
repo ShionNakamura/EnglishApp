@@ -45,5 +45,11 @@ class WordViewModel: ObservableObject {
             print("Save failed: \(error.localizedDescription)")
         }
     }
+    
+    func toggleFavorite(_ word: WordEntity) {
+        word.isFavorite.toggle()
+        save()
+    }
+    
 }
 

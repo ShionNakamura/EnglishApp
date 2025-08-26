@@ -15,11 +15,10 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                Text("ログインする")
+                Text("ログイン")
                     .font(.largeTitle)
                     .bold()
                     .frame(height: 100)
-        
         
                 TextField("メールアドレス", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
