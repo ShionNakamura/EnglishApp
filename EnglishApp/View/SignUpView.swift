@@ -69,8 +69,7 @@ struct SignUpView: View {
             .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $isRegistered) {
-                            StarterView()
-//                    .environmentObject(authViewModel)
+                ContentView()
                         }
         }
     }

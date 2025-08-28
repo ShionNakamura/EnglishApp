@@ -19,7 +19,7 @@ struct EnglishAppApp: App {
     var body: some Scene {
         WindowGroup {
             if authViewModel.user != nil {
-                StarterView()
+                ContentView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .environmentObject(authViewModel)
                     .onAppear {

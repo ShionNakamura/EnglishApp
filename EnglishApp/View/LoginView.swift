@@ -66,8 +66,8 @@ struct LoginView: View {
             }
             .padding()
             .navigationDestination(isPresented: $isLoggedIn) {
-                        StarterView()
-            
+                ContentView()
+
                     }
             .navigationDestination(isPresented: $isSignUp) {
                         SignUpView()

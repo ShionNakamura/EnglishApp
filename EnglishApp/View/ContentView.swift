@@ -1,11 +1,9 @@
 import SwiftUI
+import CoreData
 
+// MARK: - Main ContentView with TabView
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel: WordViewModel
-
-    @State private var showingAddView = false
-    @State private var showFavorites = false 
 
     init() {
         let context = PersistenceController.shared.container.viewContext
@@ -13,65 +11,109 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(showFavorites ? viewModel.words.filter { $0.isFavorite } : viewModel.words,
-                        id: \.self) { word in
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Text("単語:").foregroundColor(.gray)
-                                Text(word.word ?? "").font(.headline)
-                            }
-                            HStack {
-                                Text("意味:").foregroundColor(.gray)
-                                Text(word.meaning ?? "").font(.headline)
-                            }
-                            HStack {
-                                Text("例文:").foregroundColor(.gray)
-                                Text(word.example ?? "").font(.headline)
-                            }
-                        }
-                        Spacer()
+        TabView {
+            // 🔹 単語帳タブ
+            NavigationView {
+                WordListView(viewModel: viewModel)
+            }
+            .tabItem {
+                Label("単語帳", systemImage: "book")
+            }
 
-                        Button(action: {
-                            viewModel.toggleFavorite(word)
-                        }) {
-                            Image(systemName: word.isFavorite ? "heart.fill" : "heart")
-                                .foregroundColor(word.isFavorite ? .red : .gray)
-                                .padding(.top, 4)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .padding(.vertical, 8)
-                }
-                .onDelete(perform: viewModel.deleteWord)
+            // 🔹 復習モードタブ
+            NavigationView {
+                ReviewTypingQuizView(viewModel: viewModel)
             }
-            .navigationTitle(showFavorites ? "お気に入り単語" : "単語帳一覧")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        showFavorites.toggle()
-                    }) {
-                        Image(systemName: showFavorites ? "heart.fill" : "heart")
-                            .foregroundColor(.red)
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { showingAddView = true }) {
-                        Image(systemName: "plus")
-                    }
-                }
+            .tabItem {
+                Label("復習", systemImage: "repeat")
             }
-            .sheet(isPresented: $showingAddView) {
-                AddWordView(viewModel: viewModel)
+
+            // 🔹 学習記録タブ
+            NavigationView {
+                StudyLogInView()
+            }
+            .tabItem {
+                Label("学習記録", systemImage: "chart.bar")
             }
         }
     }
 }
 
+// MARK: - WordListView (単語帳)
+struct WordListView: View {
+    @ObservedObject var viewModel: WordViewModel
+    @State private var showingAddView = false
+    @State private var showFavorites = false
 
+    var body: some View {
+        List {
+            ForEach(showFavorites ? viewModel.words.filter { $0.isFavorite } : viewModel.words,
+                    id: \.self) { word in
+                WordCardView(word: word, viewModel: viewModel)
+                    .padding(.vertical, 4)
+            }
+            .onDelete(perform: viewModel.deleteWord)
+        }
+        .listStyle(.plain)
+        .navigationTitle(showFavorites ? "お気に入り単語" : "単語帳一覧")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { showFavorites.toggle() }) {
+                    Image(systemName: showFavorites ? "heart.fill" : "heart")
+                        .foregroundColor(.red)
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: { showingAddView = true }) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $showingAddView) {
+            AddWordView(viewModel: viewModel)
+        }
+    }
+}
 
+// MARK: - WordCardView
+struct WordCardView: View {
+    let word: WordEntity
+    let viewModel: WordViewModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(word.word ?? "")
+                    .font(.title2).bold()
+                Spacer()
+                Button {
+                    viewModel.toggleFavorite(word)
+                } label: {
+                    Image(systemName: word.isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(word.isFavorite ? .red : .gray)
+                        .font(.title3)
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 6) {
+                Label(word.meaning ?? "", systemImage: "lightbulb")
+                    .foregroundColor(.blue)
+                Label(word.example ?? "", systemImage: "text.book.closed")
+                    .foregroundColor(.secondary)
+            }
+            .font(.subheadline)
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.ultraThinMaterial)
+                .shadow(radius: 5)
+        )
+    }
+}
+
+// MARK: - Preview
 #Preview {
     ContentView()
 }
+
