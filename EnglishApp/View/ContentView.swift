@@ -19,7 +19,6 @@ struct ContentView: View {
             .tabItem {
                 Label("単語帳", systemImage: "book")
             }
-
             // 🔹 復習モードタブ
             NavigationView {
                 ReviewTypingQuizView(viewModel: viewModel)
@@ -27,7 +26,6 @@ struct ContentView: View {
             .tabItem {
                 Label("復習", systemImage: "repeat")
             }
-
             // 🔹 学習記録タブ
             NavigationView {
                 StudyLogInView()
@@ -35,6 +33,12 @@ struct ContentView: View {
             .tabItem {
                 Label("学習記録", systemImage: "chart.bar")
             }
+            NavigationView {
+                 AccountView()
+             }
+             .tabItem {
+                 Label("アカウント", systemImage: "person.crop.circle")
+             }
         }
     }
 }
@@ -77,7 +81,7 @@ struct WordListView: View {
 
 // MARK: - WordCardView
 struct WordCardView: View {
-    let word: WordEntity
+    @ObservedObject var word: WordEntity
     let viewModel: WordViewModel
 
     var body: some View {

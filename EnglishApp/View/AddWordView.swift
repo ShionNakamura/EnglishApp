@@ -1,7 +1,3 @@
-//
-//  AddWordView.swift
-//  EnglishApp
-//
 
 
 import SwiftUI
