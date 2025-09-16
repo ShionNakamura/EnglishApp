@@ -4,6 +4,7 @@ struct RootView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
+        //fixed rootView
         Group {
             if let _ = authViewModel.user {
                 if authViewModel.isNewUser {

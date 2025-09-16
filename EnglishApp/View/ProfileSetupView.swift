@@ -5,7 +5,6 @@ struct ProfileSetupView: View {
     @State private var username: String = ""
     @State private var gender: String = "未設定"
     @State private var birthDate = Date()
-    
     @State private var isShowingConfirmation = false
 
     var body: some View {
@@ -15,11 +14,11 @@ struct ProfileSetupView: View {
                     
                     // ユーザー名
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("ユーザー名")
+                        Text("名前")
                             .font(.headline)
                             .foregroundColor(.secondary)
                         
-                        TextField("ユーザー名を入力", text: $username)
+                        TextField("名前を入力", text: $username)
                             .padding()
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(12)

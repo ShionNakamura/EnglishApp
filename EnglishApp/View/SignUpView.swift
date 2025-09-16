@@ -7,7 +7,7 @@ struct SignUpView: View {
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var errorMessage = ""
-    @State private var isRegistered = false 
+    @State private var isRegistered = false
     
     var body: some View {
         NavigationStack {
